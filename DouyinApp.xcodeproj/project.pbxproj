@@ -20,6 +20,10 @@
 		0B197B962BDA38C1008DBB4C /* UserView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0B197B952BDA38C1008DBB4C /* UserView.swift */; };
 		0B197B982BDA56B8008DBB4C /* AccountManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0B197B972BDA56B8008DBB4C /* AccountManager.swift */; };
 		0B197B9B2BDA5E8C008DBB4C /* Model.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0B197B9A2BDA5E8C008DBB4C /* Model.swift */; };
+		0B197B9E2BDB81F9008DBB4C /* HomeItemModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0B197B9D2BDB81F8008DBB4C /* HomeItemModel.swift */; };
+		0B197BA12BDB89A4008DBB4C /* ViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0B197BA02BDB89A4008DBB4C /* ViewModel.swift */; };
+		0B197BA32BDB9A38008DBB4C /* MessageItemModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0B197BA22BDB9A38008DBB4C /* MessageItemModel.swift */; };
+		0B197BA52BDB9EB5008DBB4C /* ChatItemModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0B197BA42BDB9EB5008DBB4C /* ChatItemModel.swift */; };
 		0B84C9A32BD89F0A00E85D8C /* SwiftUIX in Frameworks */ = {isa = PBXBuildFile; productRef = 0B84C9A22BD89F0A00E85D8C /* SwiftUIX */; };
 		0B84C9A62BD89FA000E85D8C /* CombineMoya in Frameworks */ = {isa = PBXBuildFile; productRef = 0B84C9A52BD89FA000E85D8C /* CombineMoya */; };
 		0B84C9A82BD89FA000E85D8C /* Moya in Frameworks */ = {isa = PBXBuildFile; productRef = 0B84C9A72BD89FA000E85D8C /* Moya */; };
@@ -68,6 +72,10 @@
 		0B197B972BDA56B8008DBB4C /* AccountManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AccountManager.swift; sourceTree = "<group>"; };
 		0B197B9A2BDA5E8C008DBB4C /* Model.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Model.swift; sourceTree = "<group>"; };
 		0B197B9C2BDA78A0008DBB4C /* README.md */ = {isa = PBXFileReference; lastKnownFileType = net.daringfireball.markdown; path = README.md; sourceTree = SOURCE_ROOT; };
+		0B197B9D2BDB81F8008DBB4C /* HomeItemModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HomeItemModel.swift; sourceTree = "<group>"; };
+		0B197BA02BDB89A4008DBB4C /* ViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ViewModel.swift; sourceTree = "<group>"; };
+		0B197BA22BDB9A38008DBB4C /* MessageItemModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MessageItemModel.swift; sourceTree = "<group>"; };
+		0B197BA42BDB9EB5008DBB4C /* ChatItemModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ChatItemModel.swift; sourceTree = "<group>"; };
 		0B84C9AA2BD8A05800E85D8C /* Api.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Api.swift; sourceTree = "<group>"; };
 		0B84C9AC2BD8A15E00E85D8C /* Networking.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Networking.swift; sourceTree = "<group>"; };
 		0B9DB5722BD7D5D30051ACBE /* DouyinApp.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = DouyinApp.app; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -144,8 +152,19 @@
 			isa = PBXGroup;
 			children = (
 				0B197B9A2BDA5E8C008DBB4C /* Model.swift */,
+				0B197B9D2BDB81F8008DBB4C /* HomeItemModel.swift */,
+				0B197BA22BDB9A38008DBB4C /* MessageItemModel.swift */,
+				0B197BA42BDB9EB5008DBB4C /* ChatItemModel.swift */,
 			);
 			path = Model;
+			sourceTree = "<group>";
+		};
+		0B197B9F2BDB8990008DBB4C /* VIewModel */ = {
+			isa = PBXGroup;
+			children = (
+				0B197BA02BDB89A4008DBB4C /* ViewModel.swift */,
+			);
+			path = VIewModel;
 			sourceTree = "<group>";
 		};
 		0B84C9A92BD89FD600E85D8C /* Networking */ = {
@@ -182,6 +201,7 @@
 			children = (
 				0B197B9C2BDA78A0008DBB4C /* README.md */,
 				0B197B992BDA5E7A008DBB4C /* Model */,
+				0B197B9F2BDB8990008DBB4C /* VIewModel */,
 				0B197B902BDA37BE008DBB4C /* Manager */,
 				0BD7D5AB2BD8B06F00C8873B /* Info.plist */,
 				0B84C9A92BD89FD600E85D8C /* Networking */,
@@ -366,13 +386,17 @@
 				0B197B832BD9FDC1008DBB4C /* TabbarView.swift in Sources */,
 				0B197B852BD9FDCE008DBB4C /* HomeView.swift in Sources */,
 				0B197B8B2BD9FDF4008DBB4C /* MyView.swift in Sources */,
+				0B197BA52BDB9EB5008DBB4C /* ChatItemModel.swift in Sources */,
 				0B84C9AB2BD8A05800E85D8C /* Api.swift in Sources */,
 				0B197B942BDA38B6008DBB4C /* ChatView.swift in Sources */,
 				0B197B892BD9FDEC008DBB4C /* MessageView.swift in Sources */,
+				0B197BA32BDB9A38008DBB4C /* MessageItemModel.swift in Sources */,
 				0B9DB5782BD7D5D30051ACBE /* ContentView.swift in Sources */,
 				0B197B982BDA56B8008DBB4C /* AccountManager.swift in Sources */,
 				0B197B962BDA38C1008DBB4C /* UserView.swift in Sources */,
+				0B197B9E2BDB81F9008DBB4C /* HomeItemModel.swift in Sources */,
 				0B9DB5762BD7D5D30051ACBE /* DouyinAppApp.swift in Sources */,
+				0B197BA12BDB89A4008DBB4C /* ViewModel.swift in Sources */,
 				0B197B9B2BDA5E8C008DBB4C /* Model.swift in Sources */,
 				0B197B872BD9FDE5008DBB4C /* FindView.swift in Sources */,
 				0B197B922BDA37D9008DBB4C /* NotiManager.swift in Sources */,

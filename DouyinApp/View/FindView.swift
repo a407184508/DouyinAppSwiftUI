@@ -9,58 +9,69 @@ import SwiftUI
 
 struct FindView: View {
     
+    @ObservedObject var objc = ViewModel()
     
     var body: some View {
-        List {
-            ForEach(1...20, id: \.self) { index in
-                VStack {
+        NavigationView(content: {
+            List {
+                ForEach(objc.homeList) { item in
                     VStack {
-                        HStack {
-                            Image("image\(index)")
-                                .resizable()
-                                .aspectRatio(contentMode: .fill)
-                                .frame(width: 50, height: 50)
-                                .clipShape(Circle())
-                            
-                            Text("title")
-                            
-                            Spacer()
-                            
-                            Text("time")
+                        VStack {
+                            HStack {
+                                Image("image\(arc4random_uniform(99) + 1)")
+                                    .resizable()
+                                    .aspectRatio(contentMode: .fill)
+                                    .frame(width: 50, height: 50)
+                                    .clipShape(Circle())
+                                
+                                Text(item.title ?? "")
+                                
+                                Spacer()
+                                
+                                Text(item.time ?? "")
+                            }
                         }
+                        
+                        Text(item.des ?? "")
+                        
+                        Opus(item)
                     }
-                    
-                    Text("subtitle")
-                    
-                    opus
-//                        .padding(10)
                 }
             }
-        }
-        .listStyle(PlainListStyle())
+            .task {
+                objc.getHome()
+            }
+            .listStyle(PlainListStyle())
+            .navigationTitle("朋友圈")
+            .navigationBarTitleDisplayMode(.inline)
+            
+        })
+
     }
-    
-//    let columns = [GridItem(.flexible()), 
-//                   GridItem(.flexible()), 
-//                   GridItem(.flexible())]
     
     let columns = [GridItem(.adaptive(minimum: 100, maximum: .infinity)),
                    GridItem(.adaptive(minimum: 100, maximum: .infinity)),
                    GridItem(.adaptive(minimum: 100, maximum: .infinity))]
     
-    var opus: some View {
+    func Opus(_ item: HomeItemModel) -> some View {
         LazyVGrid(columns: columns) {
-            ForEach(0...arc4random_uniform(8), id: \.self) {index in
-                Image("image\(arc4random_uniform(19) + 1)")
-                    .resizable()
+            ForEach(0...item.arrPhotots().count, id: \.self) {index in
+                Color.clear
+                    .aspectRatio(1, contentMode: .fill)
+                    .overlay {
+                        Image("image\(arc4random_uniform(19) + 1)")
+                            .resizable()
+                            .clipped()
+                            .aspectRatio(contentMode: .fill)
+                    }
                     .clipped()
-                    .aspectRatio(1, contentMode: .fit)
-                    
             }
         }
     }
 }
 
 #Preview {
-    FindView()
+    NavigationStack {
+        FindView()
+    }
 }

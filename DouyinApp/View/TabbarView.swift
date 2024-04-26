@@ -10,13 +10,17 @@ import SwiftUI
 struct TabbarView: View {
     var body: some View {
         TabView {
-            HomeView()
+            NavigationStack(root: {
+                HomeView()
+            })
                 .tabItem {
                     Text("Home")
                     Image(systemName: "house")
                 }
             
-            FindView()
+            NavigationStack(root: {
+                FindView()
+            })
             .tabItem {
                 Text("Find")
                 Image(systemName: "magnifyingglass")
@@ -31,8 +35,9 @@ struct TabbarView: View {
                 Image(systemName: "envelope")
             }
 
-            
-            MyView()
+            NavigationStack(root: {
+                MyView()
+            })
             .tabItem {
                 Text("My")
                 Image(systemName: "person")

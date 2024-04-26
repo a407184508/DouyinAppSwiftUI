@@ -13,6 +13,8 @@ public extension UINavigationController {
         super.viewDidLoad()
         
         delegate = NotiManager.shared
+        
+        UINavigationBar.appearance().prefersLargeTitles = false
     }
 }
 

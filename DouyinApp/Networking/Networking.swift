@@ -22,19 +22,10 @@ class Networking {
     
     var anyCancellable = Set<AnyCancellable>()
     
-    func request<T: Codable>(_ type: T.Type) -> AnyPublisher<T, MoyaError>  {
-        return provider.requestPublisher(.login(phone: "15586831807", code: "123456"))
-//            .mapString()
-//            .mapJSON()
+    func request<T: Codable>(target: Api, _ type: T.Type) -> AnyPublisher<T, MoyaError>  {
+        return provider.requestPublisher(target)
             .mapModel(T.self)
             .eraseToAnyPublisher()
-            
-//            .sink { comp in
-//                print(comp)
-//            } receiveValue: { res in
-//                print(res)
-//            }
-//            .store(in: &anyCancellable)
     }
 }
 
@@ -42,7 +33,9 @@ extension AnyPublisher where Output == Response {
     
     func mapModel<T: Codable>(_ type: T.Type) -> AnyPublisher<T, MoyaError> {
         tryMap { element in
-            try JSONDecoder().decode(T.self, from: element.data)
+            let data = try JSONDecoder().decode(T.self, from: element.data)
+            debugPrint(element.data.string(encoding: .utf8)!)
+            return data
         }
         .mapError { error in
             return .underlying(error, nil)

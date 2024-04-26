@@ -47,7 +47,7 @@ struct LoginView: View {
     }
     
     func buttonAction() {
-        Networking.shared.request(Model<LoginModel>.self)
+        Networking.shared.request(target: .login(phone: "", code: ""), Model<LoginModel>.self)
             .sink(receiveCompletion: { com in
                 print(com)
             }, receiveValue: { str in

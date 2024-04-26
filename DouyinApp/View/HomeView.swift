@@ -18,61 +18,44 @@ struct HomeView: View {
         ("square.and.arrow.up.fill", "分享")
     ]
     
+    @State var titles = ["关注", "推荐", "热门"]
+    @State var selectedTitle = "关注"
+    
+    @ObservedObject var objc = ViewModel()
+    
     var body: some View {
         
         VStack {
             
             HStack {
-                
                 Image(systemName: "magnifyingglass")
                     .padding()
-                    .onReceive(Timer.publish(every: 3, on: RunLoop.main, in: .common).autoconnect(), perform: { _ in
-                        withAnimation {
-                            if self.selection < 101 {
-                                self.selection += 1
-                            } else {
-                                self.selection = Int(arc4random_uniform(99) + 1)
-                            }
-                        }
-                    })
                 
-                ScrollView(.horizontal) {
-                    Picker("", selection: $selection, content: {
-                        ForEach(0...100, id: \.self) { index in
-                            Text("image\(index)")
-                        }
-                    })
-                    .padding()
-                    .pickerStyle(SegmentedPickerStyle())
-                }
+                Picker("", selection: $selectedTitle, content: {
+                    ForEach(titles, id: \.self) { title in
+                        Text(title)
+                            .tag(title)
+                    }
+                })
+                .padding()
+                .pickerStyle(SegmentedPickerStyle())
                 
                 Image(systemName: "gear")
                     .padding()
             }
+            .task {
+                objc.getHome()
+            }
             
             GeometryReader { proxy in
                 TabView(selection: $selection) {
-                    ForEach(1...100, id: \.self) { index in
-                        ZStack(alignment: .bottomTrailing) {
-                            Color.gray.opacity(0.6)
-                            
-                            Image("image\(index)")
-                                .resizable()
-                                .aspectRatio(contentMode: .fit)
-                                .frame(maxWidth: .infinity, maxHeight: .infinity)
-                            
-                            actionViwe
-                            
-                            tip
-                                .frame(maxWidth: .infinity)
-                        }
+                    ForEach(objc.homeList) { item in
+                        PageView(item)
                     }
                     .frame(width: proxy.size.width, height: proxy.size.height)
                     .rotationEffect(.degrees(-90))
-                    //.rotation3DEffect(flippingAngle, axis: (x: 1, y: 0, z: 0))
                 }
                 .frame(width: proxy.size.height, height: proxy.size.width)
-                //.rotation3DEffect(flippingAngle, axis: (x: 1, y: 0, z: 0))
                 .rotationEffect(.degrees(90), anchor: .topLeading)
                 .offset(x: proxy.size.width)
             }.tabViewStyle(PageTabViewStyle())
@@ -81,39 +64,54 @@ struct HomeView: View {
         
     }
     
-    var tip: some View {
-        HStack {
-            VStack(alignment: .leading) {
-                Text("@nickname")
-                Text(" 阿斯蒂芬加上看到了放假阿珂老师的减肥克拉斯京东方快乐阿里客服即可啦时间考虑的飞机卢卡斯都解封了卡就是对方离开啊就是考虑对方")
-            }
-            Spacer()
-        }
-        .padding()
-        .padding(.trailing, 100)
-        .foregroundStyle(.white)
-//        .mainBackground()
-    }
-    
-    var actionViwe: some View {
-        VStack {
-            Group {
-                // 使用循环来创建VStack
-                ForEach(actions, id: \.0) { action in
-                    VStack {
-                        Image(systemName: action.0)
-                            .font(.largeTitle)
-                        Text(action.1)
-                            .font(.title3)
-                    }
-                    .padding() // 可选：添加内边距以提高可读性
+    func PageView(_ item: HomeItemModel) -> some View{
+        ZStack(alignment: .bottomTrailing) {
+            Color.gray.opacity(0.6)
+                .overlay {
+                    Image("image\(arc4random_uniform(99)+1)")
+                        .resizable()
+                        .frame(maxWidth: .infinity, maxHeight: .infinity)
+                        .aspectRatio(contentMode: .fill)
                 }
+                .overlay {
+                    VStack {
+                        Spacer()
+                        LinearGradient(colors: [Color.black, Color.clear], startPoint: .bottom, endPoint: .top)
+                            .frame(height: 300)
+                    }
+                }
+            
+            VStack {
+                Group {
+                    // 使用循环来创建VStack
+                    ForEach(actions, id: \.0) { action in
+                        VStack {
+                            Image(systemName: action.0)
+                                .font(.largeTitle)
+                            Text(action.1)
+                                .font(.title3)
+                        }
+                        .padding() // 可选：添加内边距以提高可读性
+                    }
+                }
+                .foregroundStyle(.white)
             }
+            .padding()
+            .offset(x: 0, y: -30)
+            
+            HStack {
+                VStack(alignment: .leading) {
+                    Text(item.title ?? "")
+                    Text(item.des ?? "")
+                        .lineLimit(2)
+                }
+                Spacer()
+            }
+            .padding()
+            .padding(.trailing, 100)
             .foregroundStyle(.white)
+            .frame(maxWidth: .infinity)
         }
-        .padding()
-//        .mainBackground()
-        .offset(x: 0, y: -30)
     }
 }
 

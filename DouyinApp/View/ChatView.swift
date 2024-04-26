@@ -10,21 +10,27 @@ import SwifterSwift
 
 struct ChatView: View {
     
+    var user_id: String?
+    
+    @ObservedObject var objc = ViewModel()
+    
     @State var sendText: String = ""
     
     var body: some View {
         VStack {
             List {
-                ForEach(1...20, id: \.self) { index in
+                ForEach(objc.chatList) { item in
                 
-                    if index % 2 == 0 {
+                    if item.is_send ?? false {
                         HStack(alignment: .top) {
-                            Image("image\(index)")
+                            Image("image\(arc4random_uniform(20) + 1)")
                                 .resizable()
+                                .aspectRatio(contentMode: .fill)
                                 .frame(width: 50, height: 50)
-                                .aspectRatio(contentMode: .fit)
+                                .clipped()
+                                .clipShape(RoundedRectangle(cornerRadius: 5))
                             
-                            Text("dis" * Int(arc4random_uniform(100)))
+                            Text(item.msg ?? "")
                                 .padding()
                                 .mainBackground(Color.green)
                                 .padding(.trailing, 50)
@@ -33,15 +39,17 @@ struct ChatView: View {
                         HStack(alignment: .top) {
                             Spacer()
                             
-                            Text("dis" * Int(arc4random_uniform(100)))
+                            Text(item.msg ?? "")
                                 .padding()
                                 .mainBackground()
                                 .padding(.leading, 50)
                             
-                            Image("image\(index)")
+                            Image("image\(arc4random_uniform(20) + 21)")
                                 .resizable()
+                                .aspectRatio(contentMode: .fill)
                                 .frame(width: 50, height: 50)
-                                .aspectRatio(contentMode: .fit)
+                                .clipped()
+                                .clipShape(RoundedRectangle(cornerRadius: 5))
                         }
                     }
                 }
@@ -59,15 +67,19 @@ struct ChatView: View {
                     .padding(.horizontal)
                     .mainBackground()
                 
-                Button("发送") {}
+                Button("发送") {
+                    objc.chatList += [ChatItemModel(msg: sendText)]
+                }
                     .buttonStyle(BorderedButtonStyle())
             }
             .padding()
         }
-        
+        .task {
+            objc.getChats(user_id)
+        }
     }
 }
 
 #Preview {
-    ChatView()
+    ChatView(user_id: "")
 }

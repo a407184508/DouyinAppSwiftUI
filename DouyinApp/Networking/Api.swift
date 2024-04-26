@@ -29,6 +29,9 @@ extension Api: TargetType {
     var path: String {
         switch self {
         case .login: return "/app/mock/318565/login"
+        case .opus: return "/app/mock/318565/opus"
+        case .messageList: return "/app/mock/318565/messageList"
+        case .messageChat: return "/app/mock/318565/messageChat"
         default: return ""
         }
     }
@@ -48,12 +51,20 @@ extension Api: TargetType {
         case let .login(phone, code):
             dic["phone"] = phone
             dic["code"] = code
+        case let .opus(type):
+            dic["type"] = type
+        case let .messageChat(user_id):
+            dic["user_id"] = user_id
         default: break
         }
         return .requestParameters(parameters: dic, encoding: URLEncoding.default)
     }
     
     var headers: [String : String]? {
-        nil
+        var dic: [String: String] = [:]
+        if let jwt = kAccount.jwt {
+            dic["jwt"] = jwt
+        }
+        return dic
     }
 }
